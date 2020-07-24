@@ -24,6 +24,22 @@ void Numpy<Type>::__version__() const
 
 template <typename Type>
 inline
+void Numpy<Type>::info() const
+{
+	Type** host = this->getMatrix();
+	// 显示矩阵
+	for (int i = 0; i < Rank; ++i)
+	{
+		for (int j = 0; j < Row; ++j)
+		{
+			cout << host[i][j] << "  ";
+		}
+		cout << endl;
+	}
+}
+
+template <typename Type>
+inline
 Type** Numpy<Type>::getMatrix() const
 {
 	return Matrix;
@@ -42,13 +58,13 @@ template <typename Type>
 inline
 Type** Numpy<Type>::zeros(const int rank, const int row)
 {
-	// ´´½¨
+	// 创建
 	destroyedMatrix();
 	Rank = rank;  Row = row;
 	creatMatrix();
 	Type** matrix = getMatrix();
 
-	// ¸³Öµ
+	// 赋值
 	for (int i = 0; i < Rank; ++i)
 		for (int j = 0; j < Row; ++j)
 			matrix[i][j] = 0;
@@ -59,13 +75,13 @@ template <typename Type>
 inline
 Type** Numpy<Type>::ones(const int rank, const int row)
 {
-	// ´´½¨
+	// 创建
 	destroyedMatrix();
 	Rank = rank;  Row = row;
 	creatMatrix();
 	Type** matrix = getMatrix();
 
-	// ¸³Öµ
+	// 赋值
 	for (int i = 0; i < Rank; ++i)
 		for (int j = 0; j < Row; ++j)
 			matrix[i][j] = 1;
@@ -100,10 +116,83 @@ void Numpy<Type>::shape() const
 }
 
 template <typename Type>
+inline Numpy<Type>&
+Numpy<Type>::operator += (const Numpy<Type>& r)
+{
+	Type** host_r = r.getMatrix();
+	Type** host_t = this->getMatrix();
+	// 加和运算
+	for (int i = 0; i < this->Rank; ++i)
+	{
+		for (int j = 0; j < this->Row; ++j)
+		{
+			host_t[i][j] += host_r[i][j];
+		}
+	}
+	cout << "The matrix addition is complete.\n";
+	return *this;
+}
+
+
+template <typename Type>
+inline Numpy<Type>&
+Numpy<Type>::operator -= (const Numpy<Type>& r)
+{
+	Type** host_r = r.getMatrix();
+	Type** host_t = this->getMatrix();
+	// 减法运算
+	for (int i = 0; i < this->Rank; ++i)
+	{
+		for (int j = 0; j < this->Row; ++j)
+		{
+			host_t[i][j] -= host_r[i][j];
+		}
+	}
+	cout << "The matrix subtraction is done.\n";
+	return *this;
+}
+
+template <typename Type>
+inline Numpy<Type>&
+Numpy<Type>::operator *= (const Numpy<Type>& r)
+{
+	Type** host_r = r.getMatrix();
+	Type** host_t = this->getMatrix();
+	// 加和运算
+	for (int i = 0; i < this->Rank; ++i)
+	{
+		for (int j = 0; j < this->Row; ++j)
+		{
+			host_t[i][j] *= host_r[i][j];
+		}
+	}
+	cout << "Matrix multiplication is done.\n";
+	return *this;
+}
+
+template <typename Type>
+inline Numpy<Type>&
+Numpy<Type>::operator /= (const Numpy<Type>& r)
+{
+	Type** host_r = r.getMatrix();
+	Type** host_t = this->getMatrix();
+	// 加和运算
+	for (int i = 0; i < this->Rank; ++i)
+	{
+		for (int j = 0; j < this->Row; ++j)
+		{
+			host_t[i][j] /= host_r[i][j];
+		}
+	}
+	cout << "The matrix division operation is completed.\n";
+	return *this;
+}
+
+template <typename Type>
 inline
 Numpy<Type>::~Numpy()
 {
-	// ÊÍ·Å¾ØÕó
+	// 释放矩阵
 	destroyedMatrix();
 	cout << "Matrix has been destroyed.\n";
 }
