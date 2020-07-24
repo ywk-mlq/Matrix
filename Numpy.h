@@ -4,7 +4,8 @@
 /**
 * autor		: yuwenkai
 * date		: 2020.07.20
-* version	£º1.0.0
+* update    : 2020.07.24
+* version	：1.0.1
 */
 
 #include <cstring>
@@ -12,15 +13,14 @@
 using namespace std;
 
 /**
-* ¾ØÕóµÄÀà
-* ·ÂPython--numpy
+* 矩阵的类
+* 仿Python--numpy
 */
-
 template <typename Type>
 class Numpy
 {
 private:
-	const string version = "1.0.0";
+	const string version = "1.0.1";
 	int Rank, Row;
 	Type** Matrix;
 
@@ -29,14 +29,28 @@ private:
 	void creatMatrix();
 	void destroyedMatrix();
 
+	// 矩阵的运算
+	
+
 public:
 	Numpy();
 	~Numpy();
 	void __version__() const;
 	void array();
+
+	// 矩阵的显示
 	void shape() const;
+	void info() const;
+
+	// 矩阵的创建
 	Type** zeros(const int rank, const int row);
 	Type** ones(const int rank, const int row);
+
+	// 矩阵的运算
+	Numpy<Type>& operator += (const Numpy<Type>&);
+	Numpy<Type>& operator -= (const Numpy<Type>&);
+	Numpy<Type>& operator *= (const Numpy<Type>&);
+	Numpy<Type>& operator /= (const Numpy<Type>&);
 };
 
 #endif
