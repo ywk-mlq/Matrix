@@ -23,6 +23,8 @@ private:
 	const string version = "1.0.1";
 	int Rank, Row;
 	Type** Matrix;
+	Type** temp;
+	int temp_Rank;
 
 	string version_() const;
 	Type** getMatrix() const;
@@ -30,6 +32,7 @@ private:
 	void destroyedMatrix();
 
 	// 矩阵的运算
+	Type** __dot(const Numpy<Type>*, const Numpy<Type>&);
 	
 
 public:
@@ -51,6 +54,7 @@ public:
 	Numpy<Type>& operator -= (const Numpy<Type>&);
 	Numpy<Type>& operator *= (const Numpy<Type>&);
 	Numpy<Type>& operator /= (const Numpy<Type>&);
+	Type** dot(const Numpy<Type>&);
 };
 
 #endif
