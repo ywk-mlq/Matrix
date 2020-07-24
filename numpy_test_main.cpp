@@ -53,5 +53,21 @@ int main()
 	np_2.info();
 	cout << endl;
 
+	// 8.矩阵的点乘
+	np_1.ones(2, 3);
+	np_2.ones(3, 2);
+	int** NewNp_3 = np_1.dot(np_2);
+	// 显示数据
+	cout << "NewNp_3's info:\n";
+	for (int i = 0; i < 2; ++i)
+	{
+		for (int j = 0; j < 2; ++j)
+		{
+			cout << NewNp_3[i][j] << "  ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+
 	return 0;
 }
