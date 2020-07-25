@@ -39,6 +39,24 @@ void Numpy<Type>::info() const
 }
 
 template <typename Type>
+inline Type**
+Numpy<Type>::array(const Type(&arrays)[2][3], int rank, int row)
+{
+	destroyedMatrix();
+	Rank = rank;  Row = row;
+	creatMatrix();
+	Type** matrix = getMatrix();
+
+	// 赋值
+	for (int i = 0; i < Rank; ++i)
+	{
+		for (int j = 0; j < Row; ++j)
+			matrix[i][j] = arrays[i][j];
+	}
+	return matrix;
+}
+
+template <typename Type>
 inline
 Type** Numpy<Type>::getMatrix() const
 {
@@ -171,6 +189,18 @@ Numpy<Type>::operator *= (const Numpy<Type>& r)
 }
 
 template <typename Type>
+inline
+Numpy<Type>&
+Numpy<Type>::operator *= (const Type& r)
+{
+	Type** host_t = this->getMatrix();
+	for (int i = 0; i < Rank; ++i)
+		for (int j = 0; j < Row; ++j)
+			host_t[i][j] *= r;
+	return *this;
+}
+
+template <typename Type>
 inline Numpy<Type>&
 Numpy<Type>::operator /= (const Numpy<Type>& r)
 {
@@ -185,6 +215,18 @@ Numpy<Type>::operator /= (const Numpy<Type>& r)
 		}
 	}
 	cout << "The matrix division operation is completed.\n";
+	return *this;
+}
+
+template <typename Type>
+inline
+Numpy<Type>&
+Numpy<Type>::operator /= (const Type& r)
+{
+	Type** host_t = this->getMatrix();
+	for (int i = 0; i < Rank; ++i)
+		for (int j = 0; j < Row; ++j)
+			host_t[i][j] /= r;
 	return *this;
 }
 
@@ -223,6 +265,37 @@ Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
 		}
 	}
 	return temp;
+}
+
+template <typename Type>
+inline Type**
+Numpy<Type>::T()
+{
+	Type** last  = getMatrix();
+	Type** first = new Type * [Row];
+	for (int i = 0; i < Row; ++i)
+	{
+		first[i] = new Type[Rank];
+	}
+
+	// 转换赋值
+	for (int i = 0; i < Row; ++i)
+	{
+		for (int j = 0; j < Rank; ++j)
+		{
+			first[i][j] = last[j][i];
+		}
+	}
+
+	// 转换变量
+	destroyedMatrix();
+	int temp = Rank;
+	Rank = Row;
+	Row = temp;
+	if (Matrix == NULL)
+		Matrix = first;
+		
+	return getMatrix();
 }
 
 template <typename Type>
