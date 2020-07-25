@@ -5,7 +5,9 @@
 * autor		: yuwenkai
 * date		: 2020.07.20
 * update    	: 2020.07.24
-* version	：1.0.1
+* upadte	: 2020.07.25
+* update    	: 2020.07.26
+* version	：1.0.3
 */
 
 #include <cstring>
@@ -20,7 +22,7 @@ template <typename Type>
 class Numpy
 {
 private:
-	const string version = "1.0.1";
+	const string version = "1.0.3";
 	int Rank, Row;
 	Type** Matrix;
 	Type** temp;
@@ -39,13 +41,13 @@ public:
 	Numpy();
 	~Numpy();
 	void __version__() const;
-	void array();
 
 	// 矩阵的显示
 	void shape() const;
 	void info() const;
 
 	// 矩阵的创建
+	Type** array(const Type(&arrays)[2][3], int, int);
 	Type** zeros(const int rank, const int row);
 	Type** ones(const int rank, const int row);
 
@@ -54,7 +56,10 @@ public:
 	Numpy<Type>& operator -= (const Numpy<Type>&);
 	Numpy<Type>& operator *= (const Numpy<Type>&);
 	Numpy<Type>& operator /= (const Numpy<Type>&);
+	Numpy<Type>& operator *= (const Type&);
+	Numpy<Type>& operator /= (const Type&);
 	Type** dot(const Numpy<Type>&);
+	Type** T();
 };
 
 #endif
