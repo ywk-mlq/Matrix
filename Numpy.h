@@ -4,13 +4,15 @@
 /**
 * autor		: yuwenkai
 * date		: 2020.07.20
-* update    	: 2020.07.24
+* update    : 2020.07.24
 * upadte	: 2020.07.25
-* update    	: 2020.07.26
+* update    : 2020.07.26
 * updata	: 2020.07.27
-* version	：1.0.5
+* update    : 2020.07.29
+* version	：1.0.6
 */
 
+#include <cmath>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -24,7 +26,7 @@ template <typename Type>
 class Numpy
 {
 private:
-    const string version = "1.0.5";
+    const string version = "1.0.6";
     int Rank, Row;
     int temp_Rank;
     Type** Matrix;
@@ -64,11 +66,15 @@ public:
     Numpy<Type>& operator /= (const Type&);
     Numpy<Type>& RankPlush(const Numpy<Type>&, const int number = 0);
     Numpy<Type>& RowPlush(const Numpy<Type>&, const int number = 0);
+    bool operator == (const Numpy<Type>&) const;
     Type** dot(const Numpy<Type>&);
     Numpy<Type>& T();
 
     // 矩阵友元运算
     friend Type tr(const Numpy<Type>& r);
+    friend Type det(const Numpy<Type>& r);
+    friend Numpy<Type>& operator - (Numpy<Type>& r);
+    
         
 
 };
