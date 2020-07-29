@@ -148,9 +148,34 @@ int main()
         cerr << str;
     }
     np_1.info();
-    cout << "tr(np_1) = " << tr(np_1 *= 3) << endl;
+    cout << "tr(np_1*3) = " << tr(np_1 *= 3) << endl;
     np_1.info();
     cout << endl;
+
+    // 16.矩阵的负
+    cout << "No.16 The negative of the matrix.\n";
+    cout << "Numpy_2's info:\n";
+    np_2.info();
+    -np_2;
+    cout << "Numpy_2's info:\n";
+    np_2.info();
+    cout << endl;
+
+    // 17.判断矩阵是否相等
+    cout << "No.17 Determine if the matrices are equal.\n";
+    if (np_1 == np_2)
+        cout << "np_1 == np_2\n";
+    else
+        cout << "np_1 != np_2\n";
+    if (np_1 == np_1)
+        cout << "np_1 == np_1\n";
+    else
+        cout << "np_1 != np_1\n";
+    cout << endl;
+
+    // 18.矩阵的代数余子式乘积之和
+    cout << "No.18 Sum of the cofactor products of a matrix.\n";
+
 
     return 0;
 }
