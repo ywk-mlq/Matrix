@@ -134,6 +134,25 @@ void Numpy<Type>::shape() const
 }
 
 template <typename Type>
+inline bool
+Numpy<Type>::operator == (const Numpy<Type>& r) const
+{
+    if (&r == this)
+        return true;
+    if (this->Rank != r.Rank || this->Row != r.Row)
+        return false;
+    for (int i = 0; i < Rank; ++i)
+    {
+        for (int j = 0; j < Row; ++j)
+        {
+            if (this->Matrix[i][j] != r.Matrix[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+
+template <typename Type>
 inline Numpy<Type>&
 Numpy<Type>::operator += (const Numpy<Type>& r)
 {
@@ -466,3 +485,55 @@ float tr(const Numpy<float>& r)
     }
     return sum;
 }
+
+inline
+Numpy<int>& operator - (Numpy<int>& r)
+{
+    for (int i = 0; i < r.Rank; ++i)
+    {
+        for (int j = 0; j < r.Row; ++j)
+        {
+            r.Matrix[i][j] = 0 - r.Matrix[i][j];
+        }
+    }
+    return r;
+}
+
+inline
+Numpy<double>& operator - (Numpy<double>& r)
+{
+    for (int i = 0; i < r.Rank; ++i)
+    {
+        for (int j = 0; j < r.Row; ++j)
+        {
+            r.Matrix[i][j] = 0 - r.Matrix[i][j];
+        }
+    }
+    return r;
+}
+
+inline
+Numpy<float>& operator - (Numpy<float>& r)
+{
+    for (int i = 0; i < r.Rank; ++i)
+    {
+        for (int j = 0; j < r.Row; ++j)
+        {
+            r.Matrix[i][j] = 0 - r.Matrix[i][j];
+        }
+    }
+    return r;
+}
+
+//inline
+//int det(const Numpy<int>& r)
+//{
+//    int dets = 0;
+//    for (int i = 0; i < r.Rank; ++i)
+//    {
+//        for (int j = 0; j < r.Row; ++j)
+//        {
+//            dets += r.Matrix[i][j] * pow(-1, i + j) * (r.Matrix[])
+//        }
+//    }
+//}
