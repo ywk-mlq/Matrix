@@ -9,7 +9,8 @@
 * update    : 2020.07.26
 * updata	: 2020.07.27
 * update    : 2020.07.29
-* version	：1.0.6
+* update    : 2020.07.30
+* version	：1.0.7
 */
 
 #include <cmath>
@@ -40,7 +41,7 @@ private:
     int getRow()  const { return Row; }
 
     // 矩阵的运算
-    Type** __dot(const Numpy<Type>*, const Numpy<Type>&);
+    Numpy<Type>& __dot(const Numpy<Type>*, const Numpy<Type>&);
 
 
 public:
@@ -67,12 +68,13 @@ public:
     Numpy<Type>& RankPlush(const Numpy<Type>&, const int number = 0);
     Numpy<Type>& RowPlush(const Numpy<Type>&, const int number = 0);
     bool operator == (const Numpy<Type>&) const;
-    Type** dot(const Numpy<Type>&);
+    bool operator != (const Numpy<Type>&) const;
+    Numpy<Type>& dot(const Numpy<Type>&);
     Numpy<Type>& T();
 
     // 矩阵友元运算
     friend Type tr(const Numpy<Type>& r);
-    friend Type det(const Numpy<Type>& r);
+    // friend Type det(const Numpy<Type>& r);
     friend Numpy<Type>& operator - (Numpy<Type>& r);
     
         
