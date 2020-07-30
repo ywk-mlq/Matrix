@@ -153,6 +153,25 @@ Numpy<Type>::operator == (const Numpy<Type>& r) const
 }
 
 template <typename Type>
+inline bool
+Numpy<Type>::operator != (const Numpy<Type>& r) const
+{
+    if (&r == this)
+        return false;
+    if (this->Rank != r.Rank || this->Row != r.Row)
+        return true;
+    for (int i = 0; i < Rank; ++i)
+    {
+        for (int j = 0; j < Row; ++j)
+        {
+            if (this->Matrix[i][j] != r.Matrix[i][j])
+                return true;
+        }
+    }
+    return false;
+}
+
+template <typename Type>
 inline Numpy<Type>&
 Numpy<Type>::operator += (const Numpy<Type>& r)
 {
@@ -350,14 +369,14 @@ Numpy<Type>::RowPlush(const Numpy<Type>& r, const int number)
 }
 
 template <typename Type>
-inline Type**
+inline  Numpy<Type>&
 Numpy<Type>::dot(const Numpy<Type>& r)
 {
     return __dot(this, r);
 }
 
 template <typename Type>
-inline Type**
+inline  Numpy<Type>&
 Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
 {
     temp = new Type * [this->Rank];
@@ -383,7 +402,7 @@ Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
             }
         }
     }
-    return temp;
+    return *this;
 }
 
 template <typename Type>
@@ -525,15 +544,9 @@ Numpy<float>& operator - (Numpy<float>& r)
     return r;
 }
 
+
 //inline
 //int det(const Numpy<int>& r)
 //{
-//    int dets = 0;
-//    for (int i = 0; i < r.Rank; ++i)
-//    {
-//        for (int j = 0; j < r.Row; ++j)
-//        {
-//            dets += r.Matrix[i][j] * pow(-1, i + j) * (r.Matrix[])
-//        }
-//    }
+//  
 //}
