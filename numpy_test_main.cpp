@@ -65,17 +65,10 @@ int main()
     cout << "No.8 Dot product of a matrix.\n";
     np_1.ones(2, 3);
     np_2.ones(3, 2);
-    int** NewNp_3 = np_1.dot(np_2);
+    np_1.dot(np_2);
     // 显示数据
-    cout << "NewNp_3's info:\n";
-    for (int i = 0; i < 2; ++i)
-    {
-        for (int j = 0; j < 2; ++j)
-        {
-            cout << NewNp_3[i][j] << "  ";
-        }
-        cout << endl;
-    }
+    cout << "np_1's info:\n";
+    np_1.info();
     cout << endl;
 
     // 9.创建矩阵
@@ -173,8 +166,6 @@ int main()
         cout << "np_1 != np_1\n";
     cout << endl;
 
-    // 18.矩阵的代数余子式乘积之和
-    cout << "No.18 Sum of the cofactor products of a matrix.\n";
 
 
     return 0;
