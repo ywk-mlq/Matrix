@@ -3,7 +3,7 @@
 template <typename Type>
 inline
 Numpy<Type>::Numpy()
-    : Rank(0), Row(0), temp_Rank(0), Matrix(NULL), temp(NULL)
+    : Rank(0), Row(0), temp_Rank(0), temp_Row(0), Matrix(NULL), temp(Matrix)
 {
     cout << "The matrix has been initialized.\n";
 }
@@ -381,6 +381,7 @@ Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
 {
     temp = new Type * [this->Rank];
     temp_Rank = this->Rank;
+    temp_Row  = r.Row;
     for (int i = 0; i < this->Rank; ++i)
     {
         temp[i] = new Type[r.Row];
@@ -392,9 +393,9 @@ Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
     Type** host_r = r.getMatrix();
 
     // 赋值
-    for (int i = 0; i < this->Rank; ++i)
+    for (int i = 0; i < temp_Rank; ++i)
     {
-        for (int j = 0; j < r.Row; ++j)
+        for (int j = 0; j < temp_Row; ++j)
         {
             for (int p = 0; p < r.Rank; ++p)
             {
@@ -402,6 +403,10 @@ Numpy<Type>::__dot(const Numpy<Type>* ths, const Numpy<Type>& r)
             }
         }
     }
+    destroyedMatrix();
+    this->Matrix = this->temp;
+    Rank = temp_Rank;
+    Row = temp_Row;
     return *this;
 }
 
@@ -427,9 +432,9 @@ Numpy<Type>::T()
 
     // 转换变量
     destroyedMatrix();
-    int temp = Rank;
+    int temp1 = Rank;
     Rank = Row;
-    Row = temp;
+    Row = temp1;
     if (Matrix == NULL)
         Matrix = first;
 
@@ -443,20 +448,6 @@ Numpy<Type>::~Numpy()
     // 释放矩阵
     destroyedMatrix();
     cout << "Matrix has been destroyed.\n";
-    if (temp != NULL)
-    {
-        for (int i = 0; i < temp_Rank; ++i)
-        {
-            if (temp[i] != NULL)
-            {
-                delete[]temp[i];
-                temp[i] = NULL;
-            }
-        }
-        delete[]temp;
-        temp = NULL;
-        cout << "Temp has been destroyed.\n";
-    }
 }
 
 
